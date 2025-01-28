@@ -1,0 +1,23 @@
+
+name: Deploy EDDIE javadocs
+on:
+  push:
+  workflow_dispatch:
+
+jobs:
+  docs-deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Create deployment files
+        run: |
+          mkdir ./build
+          echo "<h1>Test file</h1>" >> ./build/index.html
+      - name: Deploy javadoc to webserver
+        uses: ./
+        with:
+          host: ${{ secrets.WEBSERVER_FTP_HOST }}
+          user: ${{ secrets.WEBSERVER_FTP_USERNAME }}
+          password: ${{ secrets.WEBSERVER_FTP_PASSWORD }}
+          source: "./build"
+          destination: "/public_html/test/"

@@ -1,0 +1,28 @@
+name: FTP deploy
+description: "Deploy documents to a FTP server"
+inputs:
+  source:
+    required: true
+    description: "The source directory of the files that should be deployed to the FTP server"
+  destination:
+    required: true
+    description: "The destination directory on the FTP server"
+  host:
+    required: true
+    description: "Host of the FTP server"
+  user:
+    required: true
+    description: "Login name of the FTP server user"
+  password:
+    required: true
+    description: "Password for ftp server"
+
+runs:
+  using: docker
+  image: Dockerfile
+  args:
+    - ${{ inputs.source }}
+    - ${{ inputs.destination }}
+    - ${{ inputs.host }}
+    - ${{ inputs.user }}
+    - ${{ inputs.password }}
